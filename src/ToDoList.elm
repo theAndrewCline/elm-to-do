@@ -79,6 +79,7 @@ type Msg
     = CreateTodo
     | CompleteTodo Todo
     | DeleteTodo Todo
+    | ClearCompleted
     | UpdateInput String
 
 
@@ -106,6 +107,14 @@ update msg model =
 
         DeleteTodo targetTodo ->
             ( { model | todos = filter (\item -> not (item.id == targetTodo.id)) model.todos }
+            , Cmd.none
+            )
+
+        ClearCompleted ->
+            ( { model
+                | todos =
+                    filter (\item -> not (item.completed == True)) model.todos
+              }
             , Cmd.none
             )
 
@@ -149,6 +158,7 @@ view model =
                 ]
                 []
             , button [ onClick CreateTodo ] [ text "Add Todo" ]
+            , button [ onClick ClearCompleted ] [ text "ClearCompleted" ]
             ]
         , ul []
             (List.map
