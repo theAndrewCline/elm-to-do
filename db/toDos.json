@@ -1,0 +1,29 @@
+{
+  "todos": [
+    {
+      "content": "Get Milk",
+      "isCompleted": false,
+      "dueDate": "Monday"
+    },
+    {
+      "content": "Get Dog Food",
+      "isCompleted": true,
+      "dueDate": "Tuesday"
+    },
+    {
+      "content": "Mow Lawn",
+      "isCompleted": false,
+      "dueDate": "Sunday"
+    },
+    {
+      "content": "Make Bed",
+      "isCompleted": true,
+      "dueDate": "Monday"
+    },
+    {
+      "content": "Work Out",
+      "isCompleted": false,
+      "dueDate": "Monday"
+    }
+  ]
+}
