@@ -146,6 +146,46 @@ onEnter msg =
     on "keydown" (Json.andThen isEnter keyCode)
 
 
+incompleteTodoView : Todo -> Html Msg
+incompleteTodoView todo =
+    li
+        [ onClick (CompleteTodo todo) ]
+        [ text todo.content
+        , button [ onClick (DeleteTodo todo) ] [ text "x" ]
+        ]
+
+
+completeTodoView : Todo -> Html Msg
+completeTodoView todo =
+    li
+        [ onClick (CompleteTodo todo)
+        , style "text-decoration" "line-through"
+        ]
+        [ text todo.content
+        , button [ onClick (DeleteTodo todo) ] [ text "x" ]
+        ]
+
+
+sortTodos : List Todo -> List (Html Msg)
+sortTodos todos =
+    List.map
+        (\todo ->
+            if todo.completed == True then
+                completeTodoView todo
+
+            else
+                incompleteTodoView todo
+        )
+        todos
+
+
+viewList : Model -> Html Msg
+viewList model =
+    div []
+        [ ul [] (sortTodos model.todos)
+        ]
+
+
 view : Model -> Html Msg
 view model =
     div []
@@ -160,26 +200,5 @@ view model =
             , button [ onClick CreateTodo ] [ text "Add Todo" ]
             , button [ onClick ClearCompleted ] [ text "ClearCompleted" ]
             ]
-        , ul []
-            (List.map
-                (\todo ->
-                    if todo.completed == True then
-                        li
-                            [ onClick (CompleteTodo todo)
-                            , style "text-decoration" "line-through"
-                            ]
-                            [ text todo.content
-                            , button [ onClick (DeleteTodo todo) ] [ text "x" ]
-                            ]
-
-                    else
-                        li
-                            [ onClick (CompleteTodo todo)
-                            ]
-                            [ text todo.content
-                            , button [ onClick (DeleteTodo todo) ] [ text "x" ]
-                            ]
-                )
-                model.todos
-            )
+        , viewList model
         ]
